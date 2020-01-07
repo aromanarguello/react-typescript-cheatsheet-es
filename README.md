@@ -112,8 +112,9 @@
 ## Prerrequisitos
 
 1. Buena comprensión de [React](https://reactjs.org)
-2. Estar familiarizado con con los [tipos de TypeScript](https://www.typescriptlang.org/docs/handbook/basic-types.html) ([La guía de 2ality](http://2ality.com/2018/04/type-notation-typescript.html) es de ayuda)
+2. Estar familiarizado con con los [tipos de TypeScript básicos](https://www.typescriptlang.org/docs/handbook/basic-types.html) ([La guía de 2ality](http://2ality.com/2018/04/type-notation-typescript.html) es de ayuda)
 3. Haber leído la [sección sobre TypeScript en la documentación oficial de React](https://es.reactjs.org/docs/static-type-checking.html#typescript).
+4. Haber leído [la sección de React del nuevo Typescript playground](http://www.typescriptlang.org/play/index.html?jsx=2&esModuleInterop=true&e=181#example/typescript-with-react) (opcional: además haga los 40+ ejemplos debajo de la sección de ejemplos [del playground](http://www.typescriptlang.org/play/index.html))
 
 Esta guía siempre asumirá que estás iniciando con la última versión de Typescript. Las notas para versiones anteriores se encontrarán en etiquetas expandibles `<details>`.
 
@@ -182,9 +183,9 @@ Algunas diferencias con la versión "normal de función":
 - Proporciona un definición implícita de `children` (ver debajo); sin embargo existen algunos problemas con el tipo implícito `children` (p.ej. [DefinitelyTyped#33006](https://github.com/DefinitelyTyped/DefinitelyTyped/issues/33006)), y podría considerarse de todas formas ser explícito en los componentes que consumen `children`.
 
 ```tsx
-const Title: React.FunctionComponent<{ title: string }> = ({
+const Title: React.FunctionComponent<{ title: string }> = ({ 
   children,
-  title
+  title 
 }) => <div title={title}>{children}</div>;
 ```
 
@@ -204,7 +205,7 @@ Estos patrones no se permiten:
 **Renderizado condicional**
 
 ```tsx
-const MyConditionalComponent = ({ shouldRender = false }) =>
+const MyConditionalComponent = ({ shouldRender = false }) => 
   shouldRender ? <div /> : false; // no hagas esto tampoco en JS
 const el = <MyConditionalComponent />; // lanza un error
 ```
@@ -317,8 +318,8 @@ Puedes usar [Uniones discriminadas](https://www.typescriptlang.org/docs/handbook
 
 ```tsx
 type AppState = {};
-type Action =
-  | { type: "SET_ONE"; payload: string }
+type Action = 
+  | { type: "SET_ONE"; payload: string } 
   | { type: "SET_TWO"; payload: number };
 
 export function reducer(state: AppState, action: Action): AppState {
@@ -373,7 +374,7 @@ export function useLoading() {
     return aPromise.finally(() => setState(false));
   };
   return [isLoading, load] as [
-    boolean,
+    boolean, 
     (aPromise: Promise<any>) => Promise<any>
   ];
 }
@@ -716,7 +717,7 @@ Aquí hay algunas formas en las que puedes anotar `getDerivedStateFromProps`
 ```tsx
 class Comp extends React.Component<Props, State> {
   static getDerivedStateFromProps(
-    props: Props,
+    props: Props, 
     state: State
   ): Partial<State> | null {
     //
@@ -728,7 +729,7 @@ class Comp extends React.Component<Props, State> {
 
 ```tsx
 class Comp extends React.Component<
-  Props,
+  Props, 
   ReturnType<typeof Comp["getDerivedStateFromProps"]>
 > {
   static getDerivedStateFromProps(props: Props) {}
@@ -1365,7 +1366,7 @@ const [state, setState] = React.useState({
 
 // NOTA: La mezcla de estado anterior en realidad no se recomienda con React.useState
 // aquí solo estamos demostrando como usar Partial
-const partialStateUpdate = (obj: Partial<typeof state>) =>
+const partialStateUpdate = (obj: Partial<typeof state>) => 
   setState({ ...state, ...obj });
 
 // luego...
@@ -1679,6 +1680,7 @@ Lo creas o no, apenas hemos introducido TypeScript en esta cheatsheet. Hay un mu
 
 Vale la pena menicionar algunos recursos para inciarse:
 
+- La sección de los 40+ ejemplos [del playground](http://www.typescriptlang.org/play/index.html), escrito por @Orta
 - El resumen de TS de Anders Hejlsberg's: https://www.youtube.com/watch?v=ET4kT88JRXs
 - Marius Schultz: https://blog.mariusschulz.com/series/typescript-evolution con un [curso de Egghead.io](https://egghead.io/courses/advanced-static-types-in-typescript)
 - La explicación profunda de Basarat: https://basarat.gitbooks.io/typescript/
